@@ -16,26 +16,26 @@
 
 ##### 词云：
 
-![image-20231215162906772](C:\Users\ying\AppData\Roaming\Typora\typora-user-images\image-20231215162906772.png)
+![image-20231215162906772](./images/image-20231215162906772.png)
 
 ##### MVP次数变化：
 
 **不断动态展示前10名的变化**
 
-![image-20231215163015195](C:\Users\ying\AppData\Roaming\Typora\typora-user-images\image-20231215163015195.png)
+![image-20231215163015195](./images/image-20231215163015195.png)
 
 ##### 战队数据对比：
 
-![image-20231215163252956](C:\Users\ying\AppData\Roaming\Typora\typora-user-images\image-20231215163252956.png)
+![image-20231215163252956](./images/image-20231215163252956.png)
 
-![image-20231215163411546](C:\Users\ying\AppData\Roaming\Typora\typora-user-images\image-20231215163411546.png)
+![image-20231215163411546](./images/image-20231215163411546.png)
 
-![image-20231215163429988](C:\Users\ying\AppData\Roaming\Typora\typora-user-images\image-20231215163429988.png)
+![image-20231215163429988](./images/image-20231215163429988.png)
 
 ##### 个人数据对比：
 
-![image-20231215163627607](C:\Users\ying\AppData\Roaming\Typora\typora-user-images\image-20231215163627607.png)
+![image-20231215163627607](./images/image-20231215163627607.png)
 
-![image-20231215163804170](C:\Users\ying\AppData\Roaming\Typora\typora-user-images\image-20231215163804170.png)
+![image-20231215163804170](./images/image-20231215163804170.png)
 
-![image-20231215163835761](C:\Users\ying\AppData\Roaming\Typora\typora-user-images\image-20231215163835761.png)
+![image-20231215163835761](./images/image-20231215163835761.png)
