@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <style>
+        
+        body>div {
+            margin: 10px;
+        }
+        body{
+    background: url("../image/background.png") no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+        .hidden {  
+            display: block;  
+         }  
+         .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        h5 {
+            color: #007bff; /* Set the text color to a nice blue */
+            text-align: center; /* Center the text */
+            padding: 10px; /* Add some padding for better spacing */
+            background-color:rgba(0,0,0,0,); /* Set a white background color */
+            border-radius: 5px; /* Add rounded corners */
+            font-family:"幼圆";
+            font: size 40px;
+            font-weight: bold;
+        }
+        .col-md-6 {
+            margin-right: 20px;
+        }
+        #leftImage {
+            width: 200px;
+            height: 168px;
+            position: absolute;
+            left: 400px;
+            top: 560px;
+        }
+        #midImage {
+            width: 500px;
+            height: 400px;
+            position: absolute;
+            left: 600px;
+            top: 450px;
+        }
+        #rightImage {
+            width: 200px;
+            height: 168px;
+            position: absolute;
+            right: 200px;
+            top: 560px;
+        }
+
+    </style>
+    <title>个人数据对比</title>
+    <!-- <script>
+        function bigger() {
+            document.getElementById('fanhuiimg').style.height = 120 + "px"
+            document.getElementById('fanhuiimg').style.width = 140 + "px"
+        }
+        function smaller() {
+            document.getElementById('fanhuiimg').style.height = 80 + "px"
+            document.getElementById('fanhuiimg').style.width = 100 + "px"
+        }
+    </script> -->
+</head>
+
+<body>
+
+    <a href="./index.html" style="height: 120px; width: 140px;"><img src="../image/N_ARROW.png" style="height: 80px; width: 100px;"></img></a>
+    <h5>请选择比较的6个维度和比较的两位选手</h5>
+    <img id="leftImage" class="hidden" src="../image/person.png">
+    <img id="midImage" class="hidden" src="../image/mid2.png">
+    <img id="rightImage" class="hidden" src="../image/person.png">
+    <div class="container mt-5">
+        <form id="selectionForm">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="场均KDA" id="checkbox1">
+                <label class="form-check-label" for="checkbox1">
+                    场均KDA
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="场均击杀数" id="checkbox2">
+                <label class="form-check-label" for="checkbox2">
+                    场均击杀数
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="场均死亡数" id="checkbox3">
+                <label class="form-check-label" for="checkbox3">
+                    场均死亡数
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="场均助攻数" id="checkbox4">
+                <label class="form-check-label" for="checkbox4">
+                    场均助攻数
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="场均经济" id="checkbox5">
+                <label class="form-check-label" for="checkbox5">
+                    场均经济
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="分均经济" id="checkbox6">
+                <label class="form-check-label" for="checkbox6">
+                    分均经济
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="经济占比" id="checkbox7">
+                <label class="form-check-label" for="checkbox7">
+                    经济占比
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="场均伤害" id="checkbox8">
+                <label class="form-check-label" for="checkbox8">
+                    场均伤害
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="分均伤害" id="checkbox9">
+                <label class="form-check-label" for="checkbox9">
+                    分均伤害
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="伤害占比" id="checkbox10">
+                <label class="form-check-label" for="checkbox10">
+                    伤害占比
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="伤害转化率" id="checkbox11">
+                <label class="form-check-label" for="checkbox11">
+                    伤害转化率
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="场均承伤" id="checkbox12">
+                <label class="form-check-label" for="checkbox12">
+                    场均承伤
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="分均承伤" id="checkbox13">
+                <label class="form-check-label" for="checkbox13">
+                    分均承伤
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="承伤占比" id="checkbox14">
+                <label class="form-check-label" for="checkbox14">
+                    承伤占比
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="场均推塔数" id="checkbox15">
+                <label class="form-check-label" for="checkbox15">
+                    场均推塔数
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="推塔占比" id="checkbox16">
+                <label class="form-check-label" for="checkbox16">
+                    推塔占比
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="参团率" id="checkbox17">
+                <label class="form-check-label" for="checkbox17">
+                    参团率
+                </label>
+            </div>
+            <div class="mb-3">
+                <label for="selectRoute1" class="form-label">选择分路1: </label>
+                <select class="form-select" id="selectRoute1" onchange="updateRoleOptions('1')">
+                    <option value="default">请选择分路</option>
+                    <option value="route1">对抗路</option>
+                    <option value="route2">打野</option>
+                    <option value="route3">中路</option>
+                    <option value="route4">发育路</option>
+                    <option value="route5">游走</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="selectRole1" class="form-label">选择选手1: </label>
+                <select class="form-select" id="selectRole1">
+                    <!-- 角色选项将在 JavaScript 中动态更新 -->
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="selectRoute2" class="form-label">选择分路2: </label>
+                <select class="form-select" id="selectRoute2" onchange="updateRoleOptions('2')">
+                    <option value="default">请选择分路</option>
+                    <option value="route1">对抗路</option>
+                    <option value="route2">打野</option>
+                    <option value="route3">中路</option>
+                    <option value="route4">发育路</option>
+                    <option value="route5">游走</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="selectRole2" class="form-label">选择选手2: </label>
+                <select class="form-select" id="selectRole2">
+                    <!-- 角色选项将在 JavaScript 中动态更新 -->
+                </select>
+            </div>
+
+            <button type="button" class="btn btn-primary mt-3" onclick="submitSelection()">进行比较</button>
+        </form>
+
+        <div id="result" class="mt-3"></div>
+    </div>
+    <div id="main" style="width: 500px; height: 400px;position: absolute; top: 400px; left: 600px"></div>
+
+    <script>
+        let 场均KDAScale = d3.scaleLinear()
+        .domain([0, 10])
+        .range([0, 100]);
+
+        let 场均击杀数Scale = d3.scaleLinear()
+        .domain([0, 5])
+        .range([0, 100]);
+
+
+        let 场均死亡数Scale = d3.scaleLinear()
+        .domain([0, 6])
+        .range([0, 100]);
+
+
+        let 场均助攻数Scale = d3.scaleLinear()
+        .domain([1, 12])
+        .range([0, 100]);
+
+        
+        
+        let 场均经济Scale = d3.scaleLinear()
+        .domain([5600, 15000])
+        .range([0, 100]);
+
+        let 分均经济Scale = d3.scaleLinear()
+        .domain([357, 820])
+        .range([0, 100]);
+
+        let 经济占比Scale = d3.scaleLinear()
+        .domain([13, 30])
+        .range([0, 100]);
+
+
+        let 场均伤害Scale = d3.scaleLinear()
+        .domain([15000, 120000])
+        .range([0, 100]);
+
+
+        let 分均伤害Scale = d3.scaleLinear()
+        .domain([900, 6200])
+        .range([0, 100]);
+
+
+        let 伤害占比Scale = d3.scaleLinear()
+        .domain([6, 36])
+        .range([0, 100]);
+
+
+
+        let 伤害转化率Scale = d3.scaleLinear()
+        .domain([50, 200])
+        .range([0, 100]);
+
+
+        let 场均承伤Scale = d3.scaleLinear()
+        .domain([23000, 160000])
+        .range([0, 100]);
+
+
+        let 分均承伤Scale = d3.scaleLinear()
+        .domain([1800, 7000])
+        .range([0, 100]);
+
+        
+        let 承伤占比Scale = d3.scaleLinear()
+        .domain([10, 40])
+        .range([0, 100]); 
+
+
+
+        let 场均推塔数Scale = d3.scaleLinear()
+        .domain([0, 4])
+        .range([0, 100]); 
+
+
+        let 推塔占比Scale = d3.scaleLinear()
+        .domain([0, 60])
+        .range([0, 100]); 
+
+        let 参团率Scale = d3.scaleLinear()
+        .domain([20, 100])
+        .range([0, 100]); 
+
+
+
+        let array = [
+            "KDA",//0-10
+            "经济", //13-30
+            "输出占比",//6-36
+            "伤转率",//50-200
+            "承伤占比",//40-10
+            "场均击杀数"//0-5
+        ];
+        var selectedOptions = {
+            checkboxes: [],
+            routes: ['default', 'default'],
+            roles: ['default', 'default']
+        };
+
+        // 公共函数，用于更新角色选项
+        function updateRoleOptions(index) {
+            const selectRoute = document.getElementById(`selectRoute${index}`);
+            const selectRole = document.getElementById(`selectRole${index}`);
+
+            // 清空角色选项
+            selectRole.innerHTML = '';
+
+            // 根据选择的分路，动态添加对应的角色选项
+            switch (selectRoute.value) {
+                case 'route1':
+                    addRoleOption(selectRole, '清清', '23');
+                    addRoleOption(selectRole, '杰杰', '108');
+                    addRoleOption(selectRole, '归期', '3');
+                    addRoleOption(selectRole, '小七', '110');
+                    addRoleOption(selectRole, '百兽', '42');
+                    addRoleOption(selectRole, 'An', '56');
+                    addRoleOption(selectRole, '背影', '107');
+                    addRoleOption(selectRole, '梓轩', '69');
+                    addRoleOption(selectRole, '忆安', '60');
+                    addRoleOption(selectRole, '苏沫', '82');
+                    addRoleOption(selectRole, '坦然', '34');
+                    addRoleOption(selectRole, '情川', '90');
+                    addRoleOption(selectRole, '星痕', '85');
+                    addRoleOption(selectRole, '阿怪', '75');
+                    addRoleOption(selectRole, '啊泽', '51');
+                    addRoleOption(selectRole, '柠栀', '48');
+                    addRoleOption(selectRole, '凌然', '119');
+                    addRoleOption(selectRole, '誓约', '13');
+                    addRoleOption(selectRole, '梓墨', '16');
+                    addRoleOption(selectRole, '景青', '111');
+                    addRoleOption(selectRole, '自渡', '2');
+                    addRoleOption(selectRole, '小落', '30');
+                    addRoleOption(selectRole, '东方', '79');
+                    addRoleOption(selectRole, '仙语', '71');
+                    addRoleOption(selectRole, '无上', '102');
+                    addRoleOption(selectRole, '酷偕', '87');
+                    addRoleOption(selectRole, 'Fly', '11');
+                    // 添加其他选手...
+                    break;
+                case 'route2':
+                    addRoleOption(selectRole, '今屿', 'role2-1');
+                    addRoleOption(selectRole, '无畏', 'role2-1');
+                    addRoleOption(selectRole, '钟意', 'role2-2');
+                    addRoleOption(selectRole, 'Qy', 'role2-1');
+                    addRoleOption(selectRole, '小夜', 'role2-1');
+                    addRoleOption(selectRole, '可豪', 'role2-1');
+                    addRoleOption(selectRole, '花海', 'role2-1');
+                    addRoleOption(selectRole, '季节', 'role2-1');
+                    addRoleOption(selectRole, '赤辰', 'role2-1');
+                    addRoleOption(selectRole, '小胖', 'role2-1');
+                    addRoleOption(selectRole, '不然', 'role2-1');
+                    addRoleOption(selectRole, '傲神', 'role2-1');
+                    addRoleOption(selectRole, '小义', 'role2-1');
+                    addRoleOption(selectRole, '小椿', 'role2-1');
+                    addRoleOption(selectRole, '冰然', 'role2-1');
+                    addRoleOption(selectRole, '鹏鹏', 'role2-1');
+                    addRoleOption(selectRole, '晚秋', 'role2-1');
+                    addRoleOption(selectRole, '顾兴', 'role2-1');
+                    addRoleOption(selectRole, '以然', 'role2-1');
+                    addRoleOption(selectRole, '未央', 'role2-1');
+                    addRoleOption(selectRole, '梓凡', 'role2-1');
+                    addRoleOption(selectRole, '晚星', 'role2-1');
+                    addRoleOption(selectRole, '玄影', 'role2-1');
+                    addRoleOption(selectRole, '林一', 'role2-1');
+                    addRoleOption(selectRole, '九月', 'role2-1');
+                    addRoleOption(selectRole, '暖阳', 'role2-1');
+                    addRoleOption(selectRole, '迷途', 'role2-1');
+                    // 添加其他选手...
+                    break;
+                case 'route3':
+                    addRoleOption(selectRole, '清融', 'role3-1');
+                    addRoleOption(selectRole, '千世', 'role3-2');
+                    addRoleOption(selectRole, '一曲', 'role3-1');
+                    addRoleOption(selectRole, '末将', 'role3-1');
+                    addRoleOption(selectRole, '小羽', 'role3-1');
+                    addRoleOption(selectRole, '文帝', 'role3-1');
+                    addRoleOption(selectRole, '决明', 'role3-1');
+                    addRoleOption(selectRole, 'Best', 'role3-1');
+                    addRoleOption(selectRole, '铃铛', 'role3-1');
+                    addRoleOption(selectRole, '晨风', 'role3-1');
+                    addRoleOption(selectRole, '花卷', 'role3-1');
+                    addRoleOption(selectRole, '小求', 'role3-1');
+                    addRoleOption(selectRole, '早点', 'role3-1');
+                    addRoleOption(selectRole, '月色', 'role3-1');
+                    addRoleOption(selectRole, '幕色', 'role3-1');
+                    addRoleOption(selectRole, '灵梦', 'role3-1');
+                    addRoleOption(selectRole, '话诗', 'role3-1');
+                    addRoleOption(selectRole, '九尾', 'role3-1');
+                    addRoleOption(selectRole, '秋沫', 'role3-1');
+                    addRoleOption(selectRole, '情缘', 'role3-1');
+                    addRoleOption(selectRole, '向鱼', 'role3-1');
+                    addRoleOption(selectRole, '青枫', 'role3-1');
+                    addRoleOption(selectRole, 'Ming', 'role3-1');
+                    addRoleOption(selectRole, '长生', 'role3-1');
+                    // 添加其他选手...
+                    break;
+                case 'route4':
+                    addRoleOption(selectRole, '一诺', 'role4-1');
+                    addRoleOption(selectRole, '易峥', 'role4-2');
+                    addRoleOption(selectRole, '绝意', 'role4-1');
+                    addRoleOption(selectRole, '佩恩', 'role4-1');
+                    addRoleOption(selectRole, '秀豆', 'role4-1');
+                    addRoleOption(selectRole, '妖刀', 'role4-1');
+                    addRoleOption(selectRole, '钎城', 'role4-1');
+                    addRoleOption(selectRole, '小久', 'role4-1');
+                    addRoleOption(selectRole, '冰冰', 'role4-1');
+                    addRoleOption(selectRole, '花月', 'role4-1');
+                    addRoleOption(selectRole, 'Roc', 'role4-1');
+                    addRoleOption(selectRole, '小年', 'role4-1');
+                    addRoleOption(selectRole, '梦岚', 'role4-1');
+                    addRoleOption(selectRole, '风劫', 'role4-1');
+                    addRoleOption(selectRole, '江城', 'role4-1');
+                    addRoleOption(selectRole, '蓝桉', 'role4-1');
+                    addRoleOption(selectRole, '傲寒', 'role4-1');
+                    addRoleOption(selectRole, '乔兮', 'role4-1');
+                    addRoleOption(selectRole, '风箫', 'role4-1');
+                    addRoleOption(selectRole, '小玖', 'role4-1');
+                    addRoleOption(selectRole, '花云', 'role4-1');
+                    // 添加其他选手...
+                    break;
+                case 'route5':
+                    addRoleOption(selectRole, '阿改', 'role5-1');
+                    addRoleOption(selectRole, '帆帆', 'role5-2');
+                    addRoleOption(selectRole, '冰尘', 'role5-1');
+                    addRoleOption(selectRole, '小磊', 'role5-1');
+                    addRoleOption(selectRole, '言梦', 'role5-1');
+                    addRoleOption(selectRole, '小A', 'role5-1');
+                    addRoleOption(selectRole, '久凡', 'role5-1');
+                    addRoleOption(selectRole, '爱思', 'role5-1');
+                    addRoleOption(selectRole, 'Cat', 'role5-1');
+                    addRoleOption(selectRole, '一笙', 'role5-1');
+                    addRoleOption(selectRole, '小崽', 'role5-1');
+                    addRoleOption(selectRole, '雨雨', 'role5-1');
+                    addRoleOption(selectRole, 'Zero', 'role5-1');
+                    addRoleOption(selectRole, '无铭', 'role5-1');
+                    addRoleOption(selectRole, '星宇', 'role5-1');
+                    addRoleOption(selectRole, '子阳', 'role5-1');
+                    addRoleOption(selectRole, '不弃', 'role5-1');
+                    addRoleOption(selectRole, '一门', 'role5-1');
+                    addRoleOption(selectRole, '阿豆', 'role5-1');
+                    addRoleOption(selectRole, '稚念', 'role5-1');
+                    addRoleOption(selectRole, '夏竹', 'role5-1');
+                    addRoleOption(selectRole, '十三', 'role5-1');
+                    addRoleOption(selectRole, '笑影', 'role5-1');
+                    addRoleOption(selectRole, '久酷', 'role5-1');
+                    addRoleOption(selectRole, '羲和', 'role5-1');
+                    addRoleOption(selectRole, '556', 'role5-1');
+                    // 添加其他选手...
+                    break;
+                default:
+                    break;
+            }
+
+            // 更新全局变量中的分路
+            selectedOptions.routes[index - 1] = selectRoute.value;
+        }
+
+        // 公共函数，用于添加角色选项
+        function addRoleOption(selectRole, text, value) {
+            const option = document.createElement('option');
+            option.text = text;
+            option.value = text;
+            
+            selectRole.add(option);
+        }
+
+        // 公共函数，用于提交选择
+        function submitSelection() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const selectRole1 = document.getElementById('selectRole1');
+            const selectRole2 = document.getElementById('selectRole2');
+            const resultDiv = document.getElementById('result');
+            // 检查是否所有选项都已选择
+            if (checkboxes.length != 6 || selectRole1.value === 'default' || selectRole2.value === 'default') {
+                alert('请先选择所有选项');
+                return;
+            }
+            var left = document.getElementById("leftImage");
+            var right = document.getElementById("rightImage");
+            var mid = document.getElementById("midImage");
+            left.style.display = "none";
+            right.style.display = "none";
+            mid.style.display = "none";
+            // 将选择的数据添加到全局变量中
+            checkboxes.forEach(function (checkbox) {
+                selectedOptions.checkboxes.push(checkbox.value);
+            });
+            console.log(selectRole1)
+            // 更新全局变量中的选手
+            selectedOptions.roles[0] = selectRole1.value;
+            selectedOptions.roles[1] = selectRole2.value;
+
+            // 在页面上显示选择结果
+            //resultDiv.innerHTML = `Selected Options: ${selectedOptions.checkboxes.join(', ')}<br>`;
+            //resultDiv.innerHTML += `Selected Roles: ${selectedOptions.roles.join(', ')}<br>`;
+            //resultDiv.innerHTML += `Selected Routes: ${selectedOptions.routes.join(', ')}`;
+            resultDiv.innerHTML = '';
+            d3.csv("../data/src_name.csv").then(function(data) {
+    // 遍历data数组
+
+    // 左侧图片
+    const leftImageContainer = document.createElement('div');
+    const leftImage = document.createElement('img');
+    const leftCaption = document.createElement('div');
+
+    leftImage.src = '1.jpg'; // 替换为实际图片的URL
+    leftImage.alt = '左侧图片';
+    leftImage.style.width = '200px'; // 设置图片宽度
+    leftImage.style.height = '168px'; // 设置图片高度
+    leftImage.style.position = 'absolute'; // 设置图片为绝对定位
+    leftImage.style.left = '400px'; // 设置左侧位置
+    leftImage.style.top = '560px'; // 设置顶部位置
+
+    leftCaption.innerText = ''; // 初始为空
+    leftCaption.style.position = 'absolute';
+    leftCaption.style.left = '480px'; // 与左侧图片对齐
+    leftCaption.style.top = '740px'; // 位于图片下方
+
+    leftImageContainer.appendChild(leftImage);
+    leftImageContainer.appendChild(leftCaption);
+
+    // 右侧图片
+    const rightImageContainer = document.createElement('div');
+    const rightImage = document.createElement('img');
+    const rightCaption = document.createElement('div');
+
+    rightImage.src = '1.jpg'; // 替换为实际图片的URL
+    rightImage.alt = '右侧图片';
+    rightImage.style.width = '200px'; // 设置图片宽度
+    rightImage.style.height = '168px'; // 设置图片高度
+    rightImage.style.position = 'absolute'; // 设置图片为绝对定位
+    rightImage.style.right = '200px'; // 设置右侧位置
+    rightImage.style.top = '560px'; // 设置顶部位置
+
+    rightCaption.innerText = ''; // 初始为空
+    rightCaption.style.position = 'absolute';
+    rightCaption.style.right = '280px'; // 与右侧图片对齐
+    rightCaption.style.top = '740px'; // 位于图片下方
+
+    rightImageContainer.appendChild(rightImage);
+    rightImageContainer.appendChild(rightCaption);
+
+    data.forEach(function(row) {
+        // 找到名字是"一诺"的数据
+        if (row.alt === selectRole1.value) {
+            leftImage.src = row.src;
+            leftCaption.innerText = row.alt; // 设置左侧文字
+        }
+        if(row.alt == selectRole2.value){
+            rightImage.src = row.src;
+            rightCaption.innerText = row.alt; // 设置右侧文字
+        }
+    });
+
+    resultDiv.appendChild(leftImageContainer);
+    resultDiv.appendChild(rightImageContainer);
+});
+            
+
+            
+            
+
+
+        d3.csv("../data/data.csv").then(function(data){
+            console.log(data[0].推塔占比)
+            let player=[];
+            player.push(selectRole1.value)
+            player.push(selectRole2.value)
+
+
+            let dataset3 = [];
+            let dataset4 = [];
+            let dataset5 = [];
+            let playdata1=[];
+            let playdata2=[];
+
+
+        for(let k=0;k<2;k++)
+        {
+            for(let i=0;i<data.length;i++)
+            {
+
+                if(player[k]==data[i].选手)
+                {
+                let dataset1 = [];
+                let dataset2 = [];
+                
+                for(let j=0;j<6;j++)
+                {
+                    if(checkboxes[j].value=="场均KDA")
+                    {
+                        let item={name: checkboxes[j].value,value: 场均KDAScale(parseFloat(data[i].场均KDA,10))}
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].场均KDA,10)}
+                        dataset2.push(item2)
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 10,min: 0}
+                            dataset3.push(item3)
+                            dataset4.push( parseFloat(data[i].场均KDA,10))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].场均KDA,10))
+                        }
+                    }
+                    else if(checkboxes[j].value=="场均击杀数")
+                    {
+                        let item={name: checkboxes[j].value,value: 场均击杀数Scale(parseFloat(data[i].场均击杀数,10))}
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].场均击杀数,10)}
+                        dataset2.push(item2)
+                        
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 5,min: 0}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].场均击杀数,10))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].场均击杀数,10))
+                        }
+                    }
+                    else if(checkboxes[j].value=="场均死亡数")
+                    {
+                        let item={name: checkboxes[j].value,value: 场均死亡数Scale(parseFloat(data[i].场均死亡数,10))}
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].场均死亡数,10)}
+                        dataset2.push(item2)
+                        
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 6,min: 0}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].场均死亡数,10))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].场均死亡数,10))
+                        }
+                    }
+                    else if(checkboxes[j].value=="场均助攻数")
+                    {
+                        let item={name: checkboxes[j].value,value: 场均助攻数Scale(parseFloat(data[i].场均助攻数,10))}
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].场均助攻数,10)}
+                        dataset2.push(item2)
+                        
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 12,min: 1}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].场均助攻数,10))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].场均助攻数,10))
+                        }
+                    }
+                    else if(checkboxes[j].value=="场均经济")
+                    {
+                        let item={name: checkboxes[j].value,value: 场均经济Scale(parseFloat(data[i].场均经济,10))}
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].场均经济,10)}
+                        dataset2.push(item2)
+                       
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 16000,min: 5600}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].场均经济,10))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].场均经济,10))
+                        }
+                    }
+                    else if(checkboxes[j].value=="分均经济")
+                    {
+                        let item={name: checkboxes[j].value,value: 分均经济Scale(parseFloat(data[i].分均经济,10))}
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].分均经济,10)}
+                        dataset2.push(item2)
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 820,min: 357}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].分均经济,10))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].分均经济,10))
+                        }
+                    }
+                    else if(checkboxes[j].value=="经济占比")
+                    {
+                        let item={name: checkboxes[j].value,value: 经济占比Scale(parseFloat(data[i].经济占比.replace(/%/, ''))) }
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].经济占比.replace(/%/, '')) }
+                        dataset2.push(item2)
+                       
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 30,min: 13}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].经济占比.replace(/%/, '')))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].经济占比.replace(/%/, '')))
+                        }
+                    }
+                    else if(checkboxes[j].value=="场均伤害")
+                    {
+                        let item={name: checkboxes[j].value,value: 场均伤害Scale(parseFloat(data[i].场均伤害,10))}
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].场均伤害,10)}
+                        dataset2.push(item2)
+                        
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 120000,min: 15000}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].场均伤害,10))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].场均伤害,10))
+                        }
+                    }
+                    else if(checkboxes[j].value=="分均伤害")
+                    {
+                        let item={name: checkboxes[j].value,value: 分均伤害Scale(parseFloat(data[i].分均伤害,10))}
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].分均伤害,10)}
+                        dataset2.push(item2)
+                       
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 6200,min: 900}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].分均伤害,10))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].分均伤害,10))
+                        }
+                    }
+                    else if(checkboxes[j].value=="伤害占比")
+                    {
+                        let item={name: checkboxes[j].value,value: 伤害占比Scale(parseFloat(data[i].伤害占比.replace(/%/, ''))) }
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].伤害占比.replace(/%/, '')) }
+                        dataset2.push(item2)
+                        
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 36,min: 6}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].伤害占比.replace(/%/, '')))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].伤害占比.replace(/%/, '')))
+                        }
+                    }
+                    else if(checkboxes[j].value=="伤害转化率")
+                    {
+                        let item={name: checkboxes[j].value,value: 伤害转化率Scale(parseFloat(data[i].伤害转化率.replace(/%/, ''))) }
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].伤害转化率.replace(/%/, '')) }
+                        dataset2.push(item2)
+                        
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 200,min: 50}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].伤害转化率.replace(/%/, '')))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].伤害转化率.replace(/%/, '')))
+                        }
+                    }
+                    else if(checkboxes[j].value=="场均承伤")
+                    {
+                        let item={name: checkboxes[j].value,value: 场均承伤Scale(parseFloat(data[i].场均承伤,10))}
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].场均承伤,10)}
+                        dataset2.push(item2)
+                        
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 160000,min: 23000}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].场均承伤,10))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].场均承伤,10))
+                        }
+                    }
+                    else if(checkboxes[j].value=="分均承伤")
+                    {
+                        let item={name: checkboxes[j].value,value: 分均承伤Scale(parseFloat(data[i].分均承伤,10))}
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].分均承伤,10)}
+                        dataset2.push(item2)
+                        
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 7000,min: 1800}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].分均承伤,10))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].分均承伤,10))
+                        }
+                    }
+                    else if(checkboxes[j].value=="承伤占比")
+                    {
+                        let item={name: checkboxes[j].value,value: 承伤占比Scale(parseFloat(data[i].承伤占比.replace(/%/, ''))) }
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].承伤占比.replace(/%/, '')) }
+                        dataset2.push(item2)
+                        
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 40,min: 10}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].承伤占比.replace(/%/, '')))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].承伤占比.replace(/%/, '')))
+                        }
+                    }
+                    else if(checkboxes[j].value=="场均推塔数")
+                    {
+                        let item={name: checkboxes[j].value,value: 场均推塔数Scale(parseFloat(data[i].场均推塔数,10))}
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].场均推塔数,10)}
+                        dataset2.push(item2)
+                        
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 4,min: 0}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].场均推塔数,10))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].场均推塔数,10))
+                        }
+                    }
+                    else if(checkboxes[j].value=="推塔占比")
+                    {
+                        let item={name: checkboxes[j].value,value: 推塔占比Scale(parseFloat(data[i].推塔占比.replace(/%/, ''))) }
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].推塔占比.replace(/%/, '')) }
+                        dataset2.push(item2)
+                       
+                        if(k==0)
+                        {
+                            let item3={name: checkboxes[j].value,max: 60,min: 0}
+                        dataset3.push(item3)
+                            dataset4.push(parseFloat(data[i].推塔占比.replace(/%/, '')))
+                        }
+                        else{
+                            dataset5.push(parseFloat(data[i].推塔占比.replace(/%/, '')))
+                        }
+                    }
+                    else if(checkboxes[j].value=="参团率")
+                    {
+                        let item={name: checkboxes[j].value,value: 参团率Scale(parseFloat(data[i].参团率.replace(/%/, ''))) }
+                        dataset1.push(item)
+                        let item2={name: checkboxes[j].value,value: parseFloat(data[i].参团率.replace(/%/, '')) }
+                        dataset2.push(item2)
+                        
+                        if(k==0)
+                        {
+                            dataset4.push(parseFloat(data[i].参团率.replace(/%/, '')))
+                        }
+                        else{
+                            let item3={name: checkboxes[j].value,max: 100,min: 20}
+                        dataset3.push(item3)
+                            dataset5.push(parseFloat(data[i].参团率.replace(/%/, '')))
+                        }
+                    }
+                }
+                }
+            }
+            if(k==0)
+            {
+                playdata1={name: player[k],value:dataset4}
+            }
+            else
+            {
+                playdata2={name: player[k],value:dataset5}
+            }
+        }
+        console.log(dataset3)
+
+
+
+        var myChart = echarts.init(document.getElementById("main"));
+        
+        var option = {  //指定图表的配置项和数据
+            
+			//backgroundColor: 'rgba(204,204,204,0.7)',  //配置背景色，默认无背景
+			title: {  //配置标题组件
+				text: '数据对比',
+				target: 'blank', top: '10', left: '210', textStyle: { color: 'red', fontSize: 18, }
+			},
+			legend: {  //配置图例组件
+				show: true,  //设置是否显示图例
+				icon: 'rect',  //icon.'circle'|'rect'|'roundRect'|'triangle'|'diamond'|'pin'|'arrow'|'none'
+				top: '14',  //设置图例距离顶部边距
+				left: 430,  //设置图例距离左侧边距
+				itemWidth: 10,  //设置图例标记的图形宽度
+				itemHeight: 10,  //设置图例标记的图形高度
+				itemGap: 30,  //设置图例每项之间的间隔
+				orient: 'horizontal',  //设置图例列表的布局朝向，'horizontal'|'vertical'
+				textStyle: { fontSize: 15 }, //设置图例的公用文本样式
+				
+			},
+			tooltip: {  //配置详情提示框组件
+				//设置雷达图的tooltip不会超出div，也可设置position属性
+				//设置定位不会随着鼠标移动而变化
+				confine: true,  //设置是否将tooltip框限制在图表的区域内
+				enterable: true,  //设置鼠标是否可以移动到tooltip区域内
+			},
+			radar: [{  //配置雷达图坐标系组件，只适用于雷达图
+				center: ['50%', '56%'],  //设置中心坐标，数组的第1项是横坐标，第2项是纵坐标
+				radius: 160,  //设置圆的半径，数组的第一项是内半径，第二项是外半径
+				startAngle: 90,  //设置坐标系起始角度，也就是第一个指示器轴的角度
+				name: {  //设置（圆外的标签）雷达图每个指示器名称
+					formatter: '{value}',
+					textStyle: { fontSize: 15, color: '#000' }
+				},
+				nameGap: 2,  //设置指示器名称和指示器轴的距离，默认为15
+				splitNumber: 2,  //设置指示器轴的分割段数，default
+				shape:'polygon',  //设置雷达图绘制类型，支持'polygon','circle'
+				//设置坐标轴轴线设置
+				axisLine: { lineStyle: { color: '#fff', width: 1, type: 'solid', } },
+				//设置坐标轴在grid区域中的分隔线
+				splitLine: { lineStyle: { color: '#fff', width: 1, } },
+				splitArea: {
+					show: true,
+					areaStyle: { color: ['#abc', '#abc', '#abc', '#abc'] }
+				},  //设置分隔区域的样式
+				indicator: dataset3
+			}],
+			series: [{
+				name: '雷达图',  //系列名称，用于tooltip的显示，图例筛选
+				type: 'radar',  //系列类型: 雷达图
+				//拐点样式，'circle'|'rect'|'roundRect'|'triangle'|'diamond'|'pin'|'arrow'|'none'
+				symbol: 'none',
+				itemStyle: {  //设置折线拐点标志的样式
+					normal: { lineStyle: { width: 1 }, opacity: 0.2 },  //设置普通状态时的样式
+					emphasis: { lineStyle: { width: 5 }, opacity: 1 }  //设置高亮时的样式
+				},
+                grid: {  
+                left: '50%',  // 图表距离容器左侧的距离  
+                right: '10%',  // 图表距离容器右侧的距离  
+                top: '40%',  // 图表距离容器顶部的距离  
+                bottom: '10%'  // 图表距离容器底部的距离  
+                  },  
+				data: [ 
+                     //设置雷达图的数据是多变量(维度)
+                     
+					{   //设置第1个数据项
+						name: player[0],  //数据项名称
+						value: dataset4,  //value是具体数据
+						//symbol: 'triangle',
+						symbolSize: 5,  //设置单个数据标记的大小
+						//设置拐点标志样式
+						itemStyle: { normal: { borderColor: 'blue', borderWidth: 3 } },
+						//设置单项线条样式
+						lineStyle: { normal: { color: 'red', width: 1, opacity: 0.9 } },
+						//areaStyle: {normal:{color:'red'}}  //设置单项区域填充样式
+					},
+					{   //设置第2个数据项
+						name: player[1], 
+                        value: dataset5,
+						//symbol: 'circle',
+						symbolSize: 5,  //设置单个数据标记的大小
+						itemStyle: { normal: { borderColor: 'rgba(51,0,255,1)', borderWidth: 3, } },
+						lineStyle: { normal: { color: 'blue', width: 1, opacity: 0.9 } },
+						//areaStyle:{normal:{color:'blue'}}  //设置单项区域填充样式
+					}
+				]
+			},]
+		};
+		//使用刚指定的配置项和数据显示图表
+		myChart.setOption(option); 
+
+    })
+
+
+            // 这里您可以将选择的值传递给后端或进行其他操作
+            selectedOptions = {
+            checkboxes: [],
+            routes: ['default', 'default'],
+            roles: ['default', 'default']
+            };
+            
+        }
+    </script>
+
+</body>
+
+</html>

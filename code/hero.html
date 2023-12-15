@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hero</title>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+        .test, #chart {
+            width: 650px;
+            height: 650px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test">
+        <div id="chart"></div>
+    </div>
+    <script src="./dist/b2wordcloud.js"></script>
+    <script>
+        var words = [
+        ["王昭君",30.44],
+        ["公孙离",30.10], 
+        ["沈梦溪",29.08],
+        ["夏侯惇",28.57],
+        ["奕星",28.06],
+        ["宫本武藏", 27.38],
+        ["蒙恬", 27.04],
+        ["鲁班大师", 26.19],
+        ["赵怀真", 26.19],
+        ["张飞", 25.17],
+        ["戈雅", 25.17],
+        ["孙尚香", 24.83],
+        ["太乙真人", 24.49],
+        ["夏洛特", 24.15],
+        ["孙膑", 23.98],
+        ["项羽", 21.43],
+        ["吕布", 20.75],
+        ["镜", 20.58],
+        ["澜", 20.07],
+        ["明世隐", 19.56],
+        ["猪八戒", 19.56],
+        ["露娜", 19.22],
+        ["蒙犽", 18.88],
+        ["海月", 18.37],
+        ["铠", 18.20],
+        ["廉颇", 16.84],
+        ["鲁班七号", 16.84],
+        ["大乔", 16.84],
+        ["周瑜", 16.67],
+        ["狄仁杰", 16.50],
+        ["曜", 16.16],
+        ["嬴政", 15.65],
+        ["关羽", 14.97],
+        ["梦奇", 14.12],
+        ["虞姬", 13.95],
+        ["牛魔", 13.44],
+        ["老夫子", 12.07],
+        ["干将莫邪", 11.90],
+        ["娜可露露", 11.56],
+        ["伽罗", 10.88],
+        ["不知火舞", 10.71],
+        ["黄忠", 10.71],
+        ["狂铁", 10.20],
+        ["百里守约", 9.18],
+        ["莱西奥", 8.84],
+        ["李元芳", 8.50],
+        ["马可波罗", 7.99],
+        ["刘邦", 7.99],
+        ["苏烈", 7.65],
+        ["张良", 7.48],
+        ["花木兰", 6.80],
+        ["阿古多", 6.63],
+        ["墨子", 6.46],
+        ["姜子牙", 5.78],
+        ["兰陵王", 4.93],
+        ["橘右京", 4.59],
+        ["西施", 4.25],
+        ["金蝉", 4.25],
+        ["盾山", 3.91],
+        ["桑启", 3.91],
+        ["安琪拉", 3.57],
+        ["白起", 3.23],
+        ["上官婉儿", 3.23],
+        ["鬼谷子", 2.72],
+        ["马超", 2.72],
+        ["小乔", 2.04],
+        ["貂蝉", 1.87],
+        ["东皇太一", 1.87],
+        ["扁鹊", 1.53],
+        ["裴擒虎", 1.53],
+        ["庄周", 1.36],
+        ["钟馗", 0.85],
+        ["嫦娥", 0.85],
+        ["武则天", 0.68],
+        ["蔡文姬", 0.68],
+        ["瑶", 0.68],
+        ["曹操", 0.51],
+        ["孙悟空", 0.51],
+        ["后羿", 0.51],
+        ["司空震", 0.51],
+        ["赵云", 0.34],
+        ["女娲", 0.34],
+        ["芈月", 0.17],
+        ["艾琳", 0.17],
+        ["云缨", 0.17],
+        ]
+
+        // 出场率高于 10%
+        words = words.filter(function(item) {
+            return item[1] >= 1;
+        });
+
+        // 装饰
+        for (let i = 0; i < 30; i++) {
+            words.push(["- - -", 1.0]);
+        }
+
+        // return
+        var wordCloud = new B2wordcloud(document.getElementById("chart"), {
+            list: words,
+            tooltip: {
+                formatter: function(item) {
+                    if(item[0] == '- - -')
+                        return '<div>' + item[0] + '</div>'
+                    else
+                        return '<div>' + item[0] + '</div>' + '<div>' + "出场率：" + item[1] + "%" + '</div>'
+                },
+            },
+            color: '#3490de',
+            drawOutOfBound: false,
+            autoFontSize: true,
+            minRotation: 45,
+            maxRotation: 90,
+            rotationSteps: 90,
+            rotateRatio: 0.4,
+            gridSize: 5,
+            shadowOffsetX: 1,
+            shadowOffsetY: 1,
+            shadowBlur: 1,
+            shadowColor: 'rgba(0,0,0,0)',
+            maskImage: '../image/P.png',
+            backgroundColor: 'rgba(241, 241, 237, 0)',
+            fontFamily: "幼圆",
+            click: function(item, params, evet, index) {
+                wordCloud.dispatchAction({
+                    type: 'highlight', // highlight或downplay
+                    dataIndex: index, // 高亮数据索引
+                    keepAlive: false, // 高亮词是否唯一，false即同时只能高亮一个词
+                })
+            }
+        })
+    </script>
+</body>
+</html>

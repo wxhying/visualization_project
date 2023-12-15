@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Player</title>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+        .test, #chart {
+            width: 650px;
+            height: 650px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test">
+        <div id="chart"></div>
+    </div>
+    <script src="./dist/b2wordcloud.js"></script>
+    <script>
+        var words = [];
+
+        var csvFilePath = './data/output_file.csv';
+
+        // 异步加载文件
+        loadCSVFile(csvFilePath);
+
+        function loadCSVFile(filePath) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // 调用解析CSV的函数
+                        parseCSV(xhr.responseText);
+                    } else {
+                        console.error('Failed to load the CSV file. Status:', xhr.status);
+                    }
+                }
+            };
+            xhr.open('GET', filePath, true);
+            xhr.send();
+        }
+
+        function parseCSV(csvData) {
+            var lines = csvData.split('\n');
+
+            for (var i = 1; i < lines.length; i++) { // 从第二行开始，第一行通常是标题
+                var values = lines[i].split(',');
+                var playerName = values[1];
+                var matchCount = parseInt(values[2]);
+
+                if (!isNaN(matchCount)) { // 确保比赛场次是一个数字
+                    words.push([playerName, matchCount]);
+                }
+            }
+
+            // 只保留10场以上的
+            words = words.filter(function(item) {
+                return item[1] >= 10;
+            });
+            
+            // 装饰
+            // for (let i = 0; i < 20; i++) {
+            //     words.push(["- - -", 10]);
+            // }
+
+            createWordCloud();
+        }
+
+        function createWordCloud() {
+            // console.log(words)
+            var wordCloud = new B2wordcloud(document.getElementById("chart"), {
+                list: words,
+                tooltip: {
+                    formatter: function(item) {
+                        return '<div>' + item[0] + '</div>' + '<div>' + "比赛场次：" + item[1] + '</div>';
+                    },
+                },
+                color: '#fa4659',
+                drawOutOfBound: false,
+                autoFontSize: true,
+                minRotation: 0,
+                maxRotation: 45,
+                rotationSteps: 90,
+                rotateRatio: 0.4,
+                gridSize: 5,
+                shadowOffsetX: 1,
+                shadowOffsetY: 1,
+                shadowBlur: 1,
+                shadowColor: 'rgba(0,0,0,0)',
+                maskImage: '../image/K.png',
+                backgroundColor: 'rgba(0,0,0,0)',
+                fontFamily: "幼圆",
+                click: function(item, params, evet, index) {
+                    wordCloud.dispatchAction({
+                        type: 'highlight',
+                        dataIndex: index,
+                        keepAlive: false,
+                    })
+                }
+            });
+        }
+    </script>
+</body>
+</html>

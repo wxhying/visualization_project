@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>TEAM</title>
+    <!-- 引入 ECharts 库 -->
+    <script src="./js/echarts.min.js"></script>
+    <script src="./js/team.js"></script>
+    <script src="./js/walden.js"></script>
+    <style>
+         body{
+    background: url("../../image/background.png") no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+        .container {
+            display: flex;
+            /* 使用 Flex 布局 */
+        }
+
+        .box {
+            width: 50%;
+            height: 400px;
+            /* 设置每个 div 的宽度为50% */
+            box-sizing: border-box;
+            /* 包括边框在内的盒模型 */
+            /* 添加边框以便查看效果 */
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../index.html"><img src="../../image/N_ARROW.png" style="height: 80px; width: 100px;"></img></a>
+    <div style="justify-content: center;">
+            <img src="./imgs/XYG.jpg" alt="Selected Image" onclick="changeImage('XYG')">
+            <img src="./imgs/上海EDG.M.jpg" alt="Selected Image" onclick="changeImage('上海EDG.M')">
+            <img src="./imgs/上海RNG.M.jpg" alt="Selected Image" onclick="changeImage('上海RNG.M')">
+            <img src="./imgs/佛山DRG.jpg" alt="Selected Image" onclick="changeImage('佛山DRG')">
+            <img src="./imgs/北京WB.jpg" alt="Selected Image" onclick="changeImage('北京WB')">
+            <img src="./imgs/南京Hero久竞.jpg" alt="Selected Image" onclick="changeImage('南京Hero久竞')">
+            <img src="./imgs/厦门VG.jpg" alt="Selected Image" onclick="changeImage('厦门VG')">
+            <img src="./imgs/广州TTG.jpg" alt="Selected Image" onclick="changeImage('广州TTG')">
+            <img src="./imgs/成都AG超玩会.jpg" alt="Selected Image" onclick="changeImage('成都AG超玩会')">
+            <br />
+            <img src="./imgs/杭州LGD.NBW.jpg" alt="Selected Image" onclick="changeImage('杭州LGD.NBW')"
+                    style="width: 150px; height: 150px;">
+            <img src="./imgs/武汉eStarPro.jpg" alt="Selected Image" onclick="changeImage('武汉eStarPro')">
+            <img src="./imgs/济南RW侠.jpg" alt="Selected Image" onclick="changeImage('济南RW侠')">
+            <img src="./imgs/深圳DYG.jpg" alt="Selected Image" onclick="changeImage('深圳DYG')">
+            <img src="./imgs/苏州KSG.jpg" alt="Selected Image" onclick="changeImage('苏州KSG')">
+            <img src="./imgs/西安WE.jpg" alt="Selected Image" onclick="changeImage('西安WE')">
+            <img src="./imgs/郑州MTG.jpg" alt="Selected Image" onclick="changeImage('郑州MTG')">
+            <img src="./imgs/重庆狼队.jpg" alt="Selected Image" onclick="changeImage('重庆狼队')">
+            <img src="./imgs/长沙TES.A.jpg" alt="Selected Image" onclick="changeImage('长沙TES.A')">
+    </div>
+
+    <div id="iconDisplay" style="width: 1400px; height: 400px;">
+        <!-- 初始时显示的图表 -->
+        <!-- <img id="displayedIcon" src="./imgs/XYG.jpg" alt="Displayed Icon" style="width: 150px; height: 150;"> -->
+    </div>
+    <div class="container">
+        <div class="box" id="kda"></div>
+        <div class="box" id="money"></div>
+    </div>
+    <div>
+            <!-- //<div id="kda" style="width: 700px; height: 400px;"></div> -->
+            
+            <!-- <br/> -->
+            <!-- <div id="win_rate" style="width: 1000px; height: 800px;"></div>
+                <br/> -->
+            <!-- <div id="money" style="width: 700px; height: 600px;"></div> -->
+    </div>
+    <!-- 创建一个容器元素，用于显示图表 -->
+
+    <!-- 引入绘制图表的 JavaScript 文件 -->
+    <br/>
+    <div id="daye" style="width: 1400px; height: 600px;"></div>
+    <!-- <br/>
+    <div id="LouDou" style="width: 700px; height: 600px;"></div> -->
+</body>
+
+</html>

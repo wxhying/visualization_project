@@ -1,0 +1,46 @@
+body{
+    background: url("../image/background.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow: hidden;
+}
+.start{
+    margin-left: 1200px;    
+    margin-top: 500px;
+}
+
+@keyframes front1 {
+    0% {
+        -webkit-transform: translateY(0) scale(0.7);
+    }
+    20% {
+        -webkit-transform: translateY(10%) scale(0.7);
+    }
+    100% {
+        -webkit-transform: translateY(-400%) scale(0.7);
+    }
+}
+@keyframes front2 {
+    0% {
+        -webkit-transform: translateY(0) scale(0.7);
+    }
+    20% {
+        -webkit-transform: translateY(-10%) scale(0.7);
+    }
+    100% {
+        -webkit-transform: translateY(400%) scale(0.7);
+    }
+}
+@keyframes front3 {
+    0% {
+        -webkit-transform: scale(1);;
+    }
+    20% {
+        -webkit-transform: scale(1.2);
+    }
+    100% {
+        -webkit-transform: scale(0);
+    }
+}

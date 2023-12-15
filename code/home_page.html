@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>KPL赛事数据</title>
+    <link rel='stylesheet' type='text/css' href='../css/animation.css'>
+</head>
+<script>
+    // 设置动画
+    function change() {
+        document.getElementById("team").style.animation = "front1 1.2s ease-in-out alternate"
+        document.getElementById("role").style.animation = "front2 1.2s ease-in-out alternate"
+        document.getElementById("player").style.animation = "front1 1.2s ease-in-out alternate"
+        document.getElementById("logo").style.animation = "front3 1s ease-in-out alternate"
+        setTimeout(function () {
+            document.getElementById("team").style.visibility = "hidden"
+            document.getElementById("role").style.visibility = "hidden"
+            document.getElementById("player").style.visibility = "hidden"
+            document.getElementById("logo").style.visibility = "hidden"
+            window.location.href = "./index.html"; // 这里换成跳转的界面
+        }, 1000)
+    }
+</script>
+
+<body scrolling="no">
+    <div class="bg">
+        
+        <img id="logo" style="position:absolute;" width="200px" src="../image/logo.png" onclick="change()">
+        <iframe id="team" scrolling='no' style="position:absolute;border:0px;;transform: scale(.7, .7)"
+            src="./player.html" height="650" width="650"></iframe>
+        <iframe id="role" scrolling='no' style="position:absolute;border:0px;transform: scale(.7, .7)" src="./hero.html"
+            height="650" width="650"></iframe>
+        <iframe id="player" scrolling='no' style="position:absolute;border:0px;transform: scale(.7, .7)"
+            src="./team.html" height="700" width="700"></iframe>
+    </div>
+</body>
+
+<script>
+    // 位置
+    console.log(document.body.clientWidth)
+    document.getElementById("logo").style.left = document.body.clientWidth / 2 - 100 + "px";
+    document.getElementById("logo").style.top = document.body.clientHeight / 2 + 500 + "px";
+    document.getElementById("team").style.left = 60 + "px";
+    document.getElementById("team").style.top = 80 + "px";
+    document.getElementById("role").style.left = 460 + "px";
+    document.getElementById("role").style.top = -80 + "px";
+    document.getElementById("player").style.left = 820 + "px";
+    document.getElementById("player").style.top = 80 + "px";
+</script>
+
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Team</title>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+        .test, #chart {
+            width: 650px;
+            height: 650px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test">
+        <div id="chart"></div>
+    </div>
+    <script src="./dist/b2wordcloud.js"></script>
+    <script>
+        var words = [
+        ["佛山DRG",53.3],
+        ["杭州LGD.NBW",53.9],
+        ["南京Hero久竞",51.1],
+        ["成都AG超玩会",48.6],
+        ["北京WB",56.7],
+        ["武汉eStarPro",53.8],
+        ["重庆狼队",69.3],
+        ["广州TTG",56.3],
+        ["济南RW侠",46.3],
+        ["苏州KSG",50.7],
+        ["长沙TES.A",45.4],
+        ["郑州MTG",45.9],
+        ["西安WE",46.8],
+        ["上海EDG.M",51.1],
+        ["XYG",40],
+        ["深圳DYG",39.4],
+        ["上海RNG.M",23.6],
+        ["厦门VG",29.7],
+        ["🏆", 69.3]
+        ]
+
+        for (let i = 0; i < 100; i++) {
+            words.push(["- - -", 23.6]);
+        }
+
+        // return
+        var wordCloud = new B2wordcloud(document.getElementById("chart"), {
+            list: words,
+            tooltip: {
+                formatter: function(item) {
+                    if(item[0] == '- - -')
+                        return '<div>' + item[0] + '</div>'
+                    else if(item[0] == '🏆')
+                        return '<div>' + "冠军：重庆狼队" + '</div>'
+                    else
+                        return '<div>' + item[0] + '</div>' + '<div>' + "战队胜率：" + item[1] + "%" + '</div>'
+                },
+            },
+            effect: 'linerMap', 
+            color: '#E39754',
+            drawOutOfBound: false,
+            autoFontSize: true,
+            minRotation: 45,
+            maxRotation: 90,
+            rotationSteps: 90,
+            rotateRatio: 0.6,
+            gridSize: 2,
+            shadowOffsetX: 1,
+            shadowOffsetY: 1,
+            shadowBlur: 1,
+            shadowColor: 'rgba(0,0,0,0)',
+            maskImage: '../image/L.png',
+            backgroundColor: 'rgba(0,0,0,0)',
+            fontFamily: "幼圆",
+            ellipticity: 5,
+            
+            click: function(item, params, evet, index) {
+                wordCloud.dispatchAction({
+                    type: 'highlight', // highlight或downplay
+                    dataIndex: index, // 高亮数据索引
+                    keepAlive: false, // 高亮词是否唯一，false即同时只能高亮一个词
+                });
+            }
+        })
+    </script>
+</body>
+</html>

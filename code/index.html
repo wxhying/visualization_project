@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>KPL赛事数据</title>
+    <link rel='stylesheet' type='text/css' href='../css/animation.css'>
+    <script src="team_info/js/echarts.min.js"></script>
+    <script src="team_info/js/index.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<script>
+    function bigger(id) {
+            document.getElementById(id).style.height = 300 + "px"
+            document.getElementById(id).style.width = 300 + "px"
+    }
+    function smaller(id) {
+        document.getElementById(id).style.height = 200 + "px"
+        document.getElementById(id).style.width = 200 + "px"
+    }
+</script>
+
+<body scrolling="no">
+    <br/>
+    <div id="main" style="height: 100%"></div>
+    <div class="bg">
+        <a href="./home_page.html" style="height: 120px; width: 140px;"><img src="../image/N_ARROW.png"
+                style="height: 120px; width: 150px;"></img></a>
+        <a href="./team_info/team.html">
+            <img id="team" style="position:absolute;" width="200px;" height="200px;" src="../image/TEAM.png" onmouseenter="bigger('team')" onmouseleave="smaller('team')">
+        </a>
+        <a href="./comparison.html">
+            <img id="player" style="position:absolute;" width="200px;" height="200px;" src="../image/PLAYER.png"
+                onmouseenter="bigger('player')" onmouseleave="smaller('player')">
+        </a>
+        <a href="./mvp/mvp/mvp.html">
+            <img id="rank" style="position:absolute;" width="200px;" height="200px;" src="../image/RANK.png"
+                onmouseenter="bigger('rank')" onmouseleave="smaller('rank')">
+        </a>
+        <!-- <img id="player" style="position:absolute;" width="200px" src="../image/PLAYER.png" onclick="change()"> -->
+    </div>
+</body>
+
+<script>
+    // 位置
+    console.log(document.body.clientWidth)
+    document.getElementById("team").style.left = document.body.clientWidth / 2- 330 + "px";
+    document.getElementById("team").style.top = document.body.clientHeight / 2 +200+ "px";
+    document.getElementById("player").style.left = document.body.clientWidth / 2 +140 + "px";
+    document.getElementById("player").style.top = document.body.clientHeight / 2 + 200 + "px";
+    document.getElementById("rank").style.left = document.body.clientWidth / 2 - 100 + "px";
+    document.getElementById("rank").style.top = document.body.clientHeight / 2 + 450 + "px";
+</script>
+
+</html>
